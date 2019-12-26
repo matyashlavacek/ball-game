@@ -18,6 +18,7 @@ export default class Game {
     this.gameState = GAME_STATE.MENU;
     this.paddle = new Paddle(this);
     this.ball = new Ball(this);
+    this.bricks = [];
     this.gameObjects = [];
     this.lives = 3;
     new InputHandler(this.paddle, this);
@@ -39,7 +40,7 @@ export default class Game {
         this.ball.reset();
       }
       this.bricks = buildLevel(this, level1);
-      this.gameObjects = [this.ball, this.paddle, ...this.bricks];
+      this.gameObjects = [this.ball, this.paddle];
       this.gameState = GAME_STATE.RUNNING;
     }
     return;
@@ -55,17 +56,17 @@ export default class Game {
     ) {
       return;
     }
-    this.gameObjects.forEach(gameObject => gameObject.update(deltaTime));
-
-    this.gameObjects = this.gameObjects.filter(
-      object => !object.markedForDeletion
+    [...this.gameObjects, ...this.bricks].forEach(object =>
+      object.update(deltaTime)
     );
-    if (this.gameObjects.length === 2) {
+
+    this.bricks = this.bricks.filter(brick => !brick.markedForDeletion);
+    if (this.bricks.length === 0) {
       this.gameState = GAME_STATE.WON;
     }
   }
   draw(ctx) {
-    this.gameObjects.forEach(gameObject => gameObject.draw(ctx));
+    [...this.gameObjects, ...this.bricks].forEach(object => object.draw(ctx));
 
     // Draw lives
     ctx.font = "14px Arial";
