@@ -15,15 +15,16 @@ export default class Ball {
 
   reset() {
     this.position = {
-      x: 10,
+      x: Math.floor(Math.random() * 800),
       y: 400
     };
     this.oldPosition = {
       x: this.position.x,
       y: this.position.y
     };
+    let rndBool = Math.random() >= 0.5;
     this.speed = {
-      x: 6,
+      x: rndBool ? 6 : -6,
       y: -6
     };
   }
