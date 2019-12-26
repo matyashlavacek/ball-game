@@ -32,15 +32,9 @@ export function detectCollision(ball, gameObject) {
 
   if (crossedTop || crossedBot) {
     collision.vertical = true;
-    console.log("vertical");
-    console.log(ball.position);
-    console.log(gameObject.position);
   }
   if (crossedLeft || crossedRight) {
     collision.horizontal = true;
-    console.log("horizontal");
-    console.log(ball.position);
-    console.log(gameObject.position);
   }
   return collision;
 }
