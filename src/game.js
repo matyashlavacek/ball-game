@@ -26,9 +26,13 @@ export default class Game {
   start() {
     if (
       this.gameState === GAME_STATE.MENU ||
-      this.gameState === GAME_STATE.WON
+      this.gameState === GAME_STATE.WON ||
+      this.gameState === GAME_STATE.GAME_OVER
     ) {
-      if (this.gameState === GAME_STATE.WON) {
+      if (
+        this.gameState === GAME_STATE.WON ||
+        this.gameState === GAME_STATE.GAME_OVER
+      ) {
         this.gameObjects = [];
         this.lives = 3;
         this.paddle.reset();
