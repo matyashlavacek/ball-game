@@ -18,6 +18,10 @@ export default class Ball {
       x: 10,
       y: 400
     };
+    this.oldPosition = {
+      x: this.position.x,
+      y: this.position.y
+    };
     this.speed = {
       x: 6,
       y: -6
@@ -35,6 +39,8 @@ export default class Ball {
   }
 
   update(deltaTime) {
+    this.oldPosition.x = this.position.x;
+    this.oldPosition.y = this.position.y;
     this.position.x += this.speed.x;
     this.position.y += this.speed.y;
 
@@ -49,9 +55,14 @@ export default class Ball {
       this.reset();
     }
 
-    if (detectCollision(this, this.game.paddle)) {
+    let collision = detectCollision(this, this.game.paddle);
+    if (collision.vertical) {
       this.speed.y = -this.speed.y;
       this.position.y = this.game.paddle.position.y - this.size;
+    }
+    if (collision.horizontal) {
+      this.speed.x = -this.speed.x;
+      this.position.x = this.game.paddle.position.x - this.size;
     }
   }
 }

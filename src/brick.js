@@ -14,9 +14,16 @@ export default class Brick {
   }
 
   update() {
-    if (detectCollision(this.game.ball, this)) {
-      this.game.ball.speed.y = -this.game.ball.speed.y;
+    let collision = detectCollision(this.game.ball, this);
+    if (collision.vertical) {
       this.markedForDeletion = true;
+      this.game.ball.position.y = this.game.ball.oldPosition.y;
+      this.game.ball.speed.y = -this.game.ball.speed.y;
+    }
+    if (collision.horizontal) {
+      this.markedForDeletion = true;
+      this.game.ball.position.x = this.game.ball.oldPosition.x;
+      this.game.ball.speed.x = -this.game.ball.speed.x;
     }
   }
 
