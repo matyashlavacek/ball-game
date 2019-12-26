@@ -1,15 +1,20 @@
 export default class Paddle {
   constructor(game) {
     this.gameWidth = game.gameWidth;
+    this.gameHeight = game.gameHeight;
     this.width = 150;
     this.height = 20;
 
     this.maxSpeed = 10;
     this.speed = 0;
 
+    this.reset();
+  }
+
+  reset() {
     this.position = {
-      x: game.gameWidth / 2 - this.width / 2,
-      y: game.gameHeight - this.height - 20
+      x: this.gameWidth / 2 - this.width / 2,
+      y: this.gameHeight - this.height - 20
     };
   }
 

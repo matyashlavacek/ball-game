@@ -24,10 +24,21 @@ export default class Game {
   }
 
   start() {
-    if (this.gameState !== GAME_STATE.MENU) return;
-    this.bricks = buildLevel(this, level1);
-    this.gameObjects = [this.ball, this.paddle, ...this.bricks];
-    this.gameState = GAME_STATE.RUNNING;
+    if (
+      this.gameState === GAME_STATE.MENU ||
+      this.gameState === GAME_STATE.WON
+    ) {
+      if (this.gameState === GAME_STATE.WON) {
+        this.gameObjects = [];
+        this.lives = 3;
+        this.paddle.reset();
+        this.ball.reset();
+      }
+      this.bricks = buildLevel(this, level1);
+      this.gameObjects = [this.ball, this.paddle, ...this.bricks];
+      this.gameState = GAME_STATE.RUNNING;
+    }
+    return;
   }
 
   update(deltaTime) {
@@ -108,6 +119,11 @@ export default class Game {
       ctx.fillStyle = "white";
       ctx.textAlign = "center";
       ctx.fillText("You won!!!", this.gameWidth / 2, this.gameHeight / 2);
+      ctx.fillText(
+        "Press SPACEBAR to Start over",
+        this.gameWidth / 2,
+        this.gameHeight / 2 + 30
+      );
     }
   }
 
